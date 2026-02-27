@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Eye, EyeOff, Loader2, ShieldCheck } from 'lucide-react';
 import { useLogin } from '../../hooks/useAuth';
+import { useAuthStore } from '../../stores/authStore';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
@@ -34,8 +35,8 @@ const DEMO_ACCOUNTS = [
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
   const loginMutation = useLogin();
+  const { isAuthenticated, user } = useAuthStore();
 
   const {
     register,
@@ -46,6 +47,20 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
+  // If already logged in, redirect to their dashboard
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const dashboardMap: Record<string, string> = {
+        PATIENT: '/patient/dashboard',
+        DOCTOR: '/doctor/dashboard',
+        HOSPITAL_STAFF: '/staff/dashboard',
+        HOSPITAL_ADMIN: '/admin/dashboard',
+        INSURANCE_PROVIDER: '/insurance/dashboard',
+      };
+      navigate(dashboardMap[user.role] ?? '/login', { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
+
   const onSubmit = (data: LoginFormData) => {
     loginMutation.mutate(data);
   };
@@ -54,10 +69,6 @@ export default function LoginPage() {
     setValue('email', email);
     setValue('password', 'Demo@1234');
   };
-
-  // Get the redirect target from state (set by ProtectedRoute)
-  const from = (location.state as { from?: { pathname: string } })?.from?.pathname;
-  if (from) navigate(from, { replace: true });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-blue-100 flex items-center justify-center p-4">
