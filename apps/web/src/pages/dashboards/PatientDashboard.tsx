@@ -2,7 +2,8 @@ import { useAuthStore } from '../../stores/authStore';
 import { useLogout } from '../../hooks/useAuth';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import { LogOut, User, FileText, Shield, Bell, Activity } from 'lucide-react';
+import { LogOut, FileText, Shield, Bell, Activity, QrCode } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function PatientDashboard() {
   const { user } = useAuthStore();
@@ -53,9 +54,9 @@ export default function PatientDashboard() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Health Records', value: '0', icon: FileText, color: 'text-blue-600 bg-blue-50' },
-            { label: 'Active Consents', value: '0', icon: Shield, color: 'text-green-600 bg-green-50' },
-            { label: 'Prescriptions', value: '0', icon: Activity, color: 'text-purple-600 bg-purple-50' },
+            { label: 'Health Records', value: '—', icon: FileText, color: 'text-blue-600 bg-blue-50' },
+            { label: 'Active Consents', value: '—', icon: Shield, color: 'text-green-600 bg-green-50' },
+            { label: 'Prescriptions', value: '—', icon: Activity, color: 'text-purple-600 bg-purple-50' },
             { label: 'Notifications', value: '0', icon: Bell, color: 'text-amber-600 bg-amber-50' },
           ].map((stat) => (
             <Card key={stat.label} className="border-0 shadow-sm">
@@ -70,52 +71,55 @@ export default function PatientDashboard() {
           ))}
         </div>
 
-        {/* Coming Soon Cards */}
+        {/* Quick Actions */}
         <div className="grid md:grid-cols-2 gap-6">
-          <Card className="border-dashed border-2 border-gray-200 bg-white">
-            <CardHeader>
-              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Medical Records
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-400">
-                Upload and manage your lab reports, prescriptions, and medical history.
-                <br /><span className="text-primary-500 font-medium">Coming in Phase 2 →</span>
-              </p>
-            </CardContent>
-          </Card>
+          <Link to="/patient/records">
+            <Card className="border border-blue-100 bg-white hover:shadow-md hover:border-blue-300 transition-all cursor-pointer">
+              <CardHeader>
+                <CardTitle className="text-base text-blue-700 flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  My Medical Records
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-500">
+                  View all your lab reports, imaging, prescriptions and medical history.
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
 
-          <Card className="border-dashed border-2 border-gray-200 bg-white">
-            <CardHeader>
-              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                Consent Management
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-400">
-                Control who can view your medical records. Grant & revoke access anytime.
-                <br /><span className="text-primary-500 font-medium">Coming in Phase 2 →</span>
-              </p>
-            </CardContent>
-          </Card>
+          <Link to="/patient/consents">
+            <Card className="border border-green-100 bg-white hover:shadow-md hover:border-green-300 transition-all cursor-pointer">
+              <CardHeader>
+                <CardTitle className="text-base text-green-700 flex items-center gap-2">
+                  <Shield className="h-5 w-5" />
+                  Consent Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-500">
+                  Control who can view your records. Approve, deny or revoke access anytime.
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
 
-          <Card className="border-dashed border-2 border-gray-200 bg-white">
-            <CardHeader>
-              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
-                <User className="h-5 w-5" />
-                Emergency QR Code
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-400">
-                Generate a QR code with your critical health info for emergencies.
-                <br /><span className="text-primary-500 font-medium">Coming in Phase 3 →</span>
-              </p>
-            </CardContent>
-          </Card>
+          <Link to="/patient/qr">
+            <Card className="border border-purple-100 bg-white hover:shadow-md hover:border-purple-300 transition-all cursor-pointer">
+              <CardHeader>
+                <CardTitle className="text-base text-purple-700 flex items-center gap-2">
+                  <QrCode className="h-5 w-5" />
+                  Emergency QR Code
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-500">
+                  Generate a QR code with your critical health info for emergency situations.
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
 
           <Card className="border-dashed border-2 border-gray-200 bg-white">
             <CardHeader>
@@ -136,3 +140,4 @@ export default function PatientDashboard() {
     </div>
   );
 }
+

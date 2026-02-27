@@ -7,6 +7,15 @@ import DoctorDashboard from './pages/dashboards/DoctorDashboard';
 import StaffDashboard from './pages/dashboards/StaffDashboard';
 import AdminDashboard from './pages/dashboards/AdminDashboard';
 import InsuranceDashboard from './pages/dashboards/InsuranceDashboard';
+// Phase 2 — Patient
+import RecordsPage from './pages/patient/RecordsPage';
+import ConsentPage from './pages/patient/ConsentPage';
+import QRCodePage from './pages/patient/QRCodePage';
+// Phase 2 — Doctor
+import PatientLookupPage from './pages/doctor/PatientLookupPage';
+import PrescriptionPage from './pages/doctor/PrescriptionPage';
+// Phase 2 — Staff
+import UploadRecordPage from './pages/staff/UploadRecordPage';
 
 // ── Placeholder for pages not yet built ──────────────────────────────────────
 
@@ -41,6 +50,30 @@ export default function App() {
           }
         />
         <Route
+          path="/patient/records"
+          element={
+            <ProtectedRoute allowedRoles={['PATIENT']}>
+              <RecordsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/patient/consents"
+          element={
+            <ProtectedRoute allowedRoles={['PATIENT']}>
+              <ConsentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/patient/qr"
+          element={
+            <ProtectedRoute allowedRoles={['PATIENT']}>
+              <QRCodePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/patient/*"
           element={
             <ProtectedRoute allowedRoles={['PATIENT']}>
@@ -59,6 +92,22 @@ export default function App() {
           }
         />
         <Route
+          path="/doctor/patients"
+          element={
+            <ProtectedRoute allowedRoles={['DOCTOR']}>
+              <PatientLookupPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doctor/prescriptions"
+          element={
+            <ProtectedRoute allowedRoles={['DOCTOR']}>
+              <PrescriptionPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/doctor/*"
           element={
             <ProtectedRoute allowedRoles={['DOCTOR']}>
@@ -73,6 +122,14 @@ export default function App() {
           element={
             <ProtectedRoute allowedRoles={['HOSPITAL_STAFF']}>
               <StaffDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/staff/upload"
+          element={
+            <ProtectedRoute allowedRoles={['HOSPITAL_STAFF']}>
+              <UploadRecordPage />
             </ProtectedRoute>
           }
         />

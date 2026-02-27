@@ -3,6 +3,7 @@ import { useLogout } from '../../hooks/useAuth';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { LogOut, Upload, Search, FileText, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function StaffDashboard() {
   const { user } = useAuthStore();
@@ -47,29 +48,69 @@ export default function StaffDashboard() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {[
-            { icon: Upload, title: 'Upload Medical Records', phase: 2, description: 'Upload lab reports, X-rays, and other patient records.' },
-            { icon: Search, title: 'Patient Lookup (by UHID)', phase: 2, description: 'Search patients by their UHID for record upload.' },
-            { icon: FileText, title: 'Record Management', phase: 2, description: 'Manage uploaded records and track verification status.' },
-            { icon: Users, title: 'Ward Management', phase: 4, description: 'Track patient admissions and bed allocation.' },
-          ].map((item) => (
-            <Card key={item.title} className="border-dashed border-2 border-gray-200 bg-white">
+          <Link to="/staff/upload">
+            <Card className="border border-blue-100 bg-white hover:shadow-md hover:border-blue-300 transition-all cursor-pointer">
               <CardHeader>
-                <CardTitle className="text-base text-gray-600 flex items-center gap-2">
-                  <item.icon className="h-5 w-5" />
-                  {item.title}
+                <CardTitle className="text-base text-blue-700 flex items-center gap-2">
+                  <Upload className="h-5 w-5" />
+                  Upload Medical Records
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-400">
-                  {item.description}
-                  <br /><span className="text-primary-500 font-medium">Coming in Phase {item.phase} →</span>
+                <p className="text-sm text-gray-500">
+                  Upload lab reports, X-rays, discharge summaries and other patient documents.
                 </p>
               </CardContent>
             </Card>
-          ))}
+          </Link>
+
+          <Card className="border-dashed border-2 border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
+                <Search className="h-5 w-5" />
+                Patient Lookup
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-400">
+                Search patients by their UHID for record access.
+                <br /><span className="text-primary-500 font-medium">Use Upload page to search →</span>
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-dashed border-2 border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Record Management
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-400">
+                Manage uploaded records and verification status.
+                <br /><span className="text-primary-500 font-medium">Coming in Phase 3 →</span>
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-dashed border-2 border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                Ward Management
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-400">
+                Track patient admissions and bed allocation.
+                <br /><span className="text-primary-500 font-medium">Coming in Phase 4 →</span>
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>
   );
 }
+

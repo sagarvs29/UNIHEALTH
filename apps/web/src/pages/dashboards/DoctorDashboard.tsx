@@ -3,6 +3,7 @@ import { useLogout } from '../../hooks/useAuth';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { LogOut, Users, FileText, Activity, Calendar } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function DoctorDashboard() {
   const { user } = useAuthStore();
@@ -46,10 +47,10 @@ export default function DoctorDashboard() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'Patients Today', value: '0', icon: Users, color: 'text-blue-600 bg-blue-50' },
-            { label: 'Pending Consents', value: '0', icon: FileText, color: 'text-amber-600 bg-amber-50' },
-            { label: 'Prescriptions', value: '0', icon: Activity, color: 'text-purple-600 bg-purple-50' },
-            { label: 'Appointments', value: '0', icon: Calendar, color: 'text-green-600 bg-green-50' },
+            { label: 'Patients Today', value: '—', icon: Users, color: 'text-blue-600 bg-blue-50' },
+            { label: 'Pending Consents', value: '—', icon: FileText, color: 'text-amber-600 bg-amber-50' },
+            { label: 'Prescriptions', value: '—', icon: Activity, color: 'text-purple-600 bg-purple-50' },
+            { label: 'Appointments', value: '—', icon: Calendar, color: 'text-green-600 bg-green-50' },
           ].map((stat) => (
             <Card key={stat.label} className="border-0 shadow-sm">
               <CardContent className="p-4">
@@ -64,29 +65,69 @@ export default function DoctorDashboard() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {[
-            { icon: Users, title: 'Patient Records Access', phase: 2, description: 'View consented patient medical history and records.' },
-            { icon: Activity, title: 'Prescriptions & Pharma-Check', phase: 2, description: 'Write prescriptions with AI-powered drug interaction checks.' },
-            { icon: Calendar, title: 'Telehealth Appointments', phase: 4, description: 'Schedule and conduct video consultations.' },
-            { icon: FileText, title: 'Clinical Notes (ICD-10)', phase: 2, description: 'Document patient visits with structured ICD-10 codes.' },
-          ].map((item) => (
-            <Card key={item.title} className="border-dashed border-2 border-gray-200 bg-white">
+          <Link to="/doctor/patients">
+            <Card className="border border-blue-100 bg-white hover:shadow-md hover:border-blue-300 transition-all cursor-pointer">
               <CardHeader>
-                <CardTitle className="text-base text-gray-600 flex items-center gap-2">
-                  <item.icon className="h-5 w-5" />
-                  {item.title}
+                <CardTitle className="text-base text-blue-700 flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  Patient Lookup
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-400">
-                  {item.description}
-                  <br /><span className="text-primary-500 font-medium">Coming in Phase {item.phase} →</span>
+                <p className="text-sm text-gray-500">
+                  Search patients by UHID, request consent, and view their medical history.
                 </p>
               </CardContent>
             </Card>
-          ))}
+          </Link>
+
+          <Link to="/doctor/prescriptions">
+            <Card className="border border-purple-100 bg-white hover:shadow-md hover:border-purple-300 transition-all cursor-pointer">
+              <CardHeader>
+                <CardTitle className="text-base text-purple-700 flex items-center gap-2">
+                  <Activity className="h-5 w-5" />
+                  Write Prescription
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-gray-500">
+                  Write prescriptions with real-time drug interaction checks (Pharma-Check).
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Card className="border-dashed border-2 border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                Telehealth Appointments
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-400">
+                Schedule and conduct video consultations.
+                <br /><span className="text-primary-500 font-medium">Coming in Phase 4 →</span>
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-dashed border-2 border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Clinical Notes (ICD-10)
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-400">
+                Document patient visits with structured ICD-10 codes. Phase 2 feature via prescription page.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>
   );
 }
+

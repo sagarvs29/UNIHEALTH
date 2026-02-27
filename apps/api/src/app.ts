@@ -3,6 +3,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import authRoutes from './routes/auth.routes';
+import recordRoutes from './routes/records.routes';
+import consentRoutes from './routes/consent.routes';
+import prescriptionRoutes from './routes/prescription.routes';
+import qrRoutes from './routes/qr.routes';
 
 export const app = express();
 
@@ -47,17 +51,17 @@ app.get('/health', (_req: Request, res: Response) => {
   });
 });
 
-// ─── API Routes (mounted here as we build them) ───────────────────────────────
+// ─── API Routes ───────────────────────────────────────────────────────────────
 
-app.use('/api/v1/auth', authRoutes);              // ← Phase 1 ✅
-// app.use('/api/v1/patients', patientRoutes);    ← Phase 1
-// app.use('/api/v1/doctors', doctorRoutes);      ← Phase 2
-// app.use('/api/v1/records', recordRoutes);      ← Phase 2
-// app.use('/api/v1/consents', consentRoutes);    ← Phase 2
-// app.use('/api/v1/prescriptions', rxRoutes);    ← Phase 2
-// app.use('/api/v1/qr', qrRoutes);               ← Phase 3
-// app.use('/api/v1/emergency', emergencyRoutes); ← Phase 3
-// app.use('/api/v1/ai', aiRoutes);               ← Phase 3
+app.use('/api/v1/auth', authRoutes);               // Phase 1 ✅
+app.use('/api/v1/records', recordRoutes);           // Phase 2 ✅
+app.use('/api/v1/consents', consentRoutes);         // Phase 2 ✅
+app.use('/api/v1/prescriptions', prescriptionRoutes); // Phase 2 ✅
+app.use('/api/v1/qr', qrRoutes);                   // Phase 2 ✅
+// app.use('/api/v1/patients', patientRoutes);      ← Phase 2+
+// app.use('/api/v1/doctors', doctorRoutes);        ← Phase 2+
+// app.use('/api/v1/emergency', emergencyRoutes);   ← Phase 3
+// app.use('/api/v1/ai', aiRoutes);                 ← Phase 3
 // app.use('/api/v1/insurance', insuranceRoutes); ← Phase 4
 // app.use('/api/v1/admin', adminRoutes);         ← Phase 4
 // app.use('/api/v1/audit', auditRoutes);         ← Phase 4
