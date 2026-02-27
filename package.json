@@ -1,0 +1,23 @@
+{
+  "name": "uhid",
+  "version": "1.0.0",
+  "description": "UniHealth ID - Unified Health Identity Platform",
+  "private": true,
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names \"API,WEB,AI\" --prefix-colors \"blue,green,yellow\" \"npm run dev --workspace=apps/api\" \"npm run dev --workspace=apps/web\" \"npm run dev --workspace=apps/ai\"",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:ai": "cd apps/ai && python main.py",
+    "build": "npm run build --workspace=apps/api && npm run build --workspace=apps/web",
+    "lint": "npm run lint --workspace=apps/api && npm run lint --workspace=apps/web",
+    "format": "prettier --write \"apps/**/*.{ts,tsx,js,json}\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.2.5"
+  }
+}
