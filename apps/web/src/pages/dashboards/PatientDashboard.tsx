@@ -121,18 +121,22 @@ export default function PatientDashboard() {
             </Card>
           </Link>
 
-          <Card className="border-dashed border-2 border-gray-200 bg-white">
+          <Card className="border border-red-100 bg-white hover:shadow-md hover:border-red-300 transition-all cursor-pointer">
             <CardHeader>
-              <CardTitle className="text-base text-gray-600 flex items-center gap-2">
+              <CardTitle className="text-base text-red-700 flex items-center gap-2">
                 <Activity className="h-5 w-5" />
-                AI Health Summary
+                SOS Emergency Mode
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-400">
-                Get plain-language summaries of your medical reports powered by GPT-4o.
-                <br /><span className="text-primary-500 font-medium">Coming in Phase 3 →</span>
+              <p className="text-sm text-gray-500 mb-3">
+                Activate SOS to grant emergency responders access to your critical health information.
               </p>
+              <Link to="/patient/sos">
+                <button className="w-full bg-red-600 hover:bg-red-700 text-white text-sm font-semibold py-2 rounded-lg transition-colors">
+                  🚨 Manage SOS
+                </button>
+              </Link>
             </CardContent>
           </Card>
         </div>

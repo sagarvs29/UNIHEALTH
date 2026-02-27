@@ -4,6 +4,7 @@ import api from '../../lib/axios';
 import { Card, CardContent } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
+import AISummaryModal from '../../components/AISummaryModal';
 
 type RecordType =
   | 'LAB_REPORT'
@@ -49,6 +50,7 @@ export default function RecordsPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [aiModalRecord, setAiModalRecord] = useState<{ id: string; title: string } | null>(null);
 
   const fetchRecords = async () => {
     setLoading(true);
@@ -142,13 +144,23 @@ export default function RecordsPage() {
                         <span>Uploaded: {format(new Date(rec.createdAt), 'dd MMM yyyy, HH:mm')}</span>
                       </div>
                     </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => setPreviewUrl(rec.fileUrl)}
-                    >
-                      View
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="text-purple-600 border-purple-200 hover:bg-purple-50"
+                        onClick={() => setAiModalRecord({ id: rec.id, title: rec.title })}
+                      >
+                        🧠 AI Summary
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => setPreviewUrl(rec.fileUrl)}
+                      >
+                        View
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -196,6 +208,14 @@ export default function RecordsPage() {
             </div>
           </div>
         </div>
+      )}
+      {/* AI Summary Modal */}
+      {aiModalRecord && (
+        <AISummaryModal
+          recordId={aiModalRecord.id}
+          recordTitle={aiModalRecord.title}
+          onClose={() => setAiModalRecord(null)}
+        />
       )}
     </div>
   );

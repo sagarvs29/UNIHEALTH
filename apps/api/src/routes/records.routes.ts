@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { authenticate, requireRoles } from '../middlewares/auth.middleware';
 import { upload } from '../middlewares/upload.middleware';
 import { uploadRecord, getRecords, getRecord, deleteRecord } from '../controllers/records.controller';
+import { decodeRecord } from '../controllers/ai.controller';
 
 const router = Router();
 
@@ -36,6 +37,13 @@ router.delete(
   '/:id',
   requireRoles('HOSPITAL_STAFF', 'HOSPITAL_ADMIN'),
   deleteRecord
+);
+
+// POST /api/v1/records/:id/decode — AI decode a record (patient/doctor)
+router.post(
+  '/:id/decode',
+  requireRoles('PATIENT', 'DOCTOR', 'HOSPITAL_ADMIN'),
+  decodeRecord
 );
 
 export default router;

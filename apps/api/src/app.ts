@@ -7,6 +7,8 @@ import recordRoutes from './routes/records.routes';
 import consentRoutes from './routes/consent.routes';
 import prescriptionRoutes from './routes/prescription.routes';
 import qrRoutes from './routes/qr.routes';
+import aiRoutes from './routes/ai.routes';
+import emergencyRoutes from './routes/emergency.routes';
 
 export const app = express();
 
@@ -58,6 +60,8 @@ app.use('/api/v1/records', recordRoutes);           // Phase 2 ✅
 app.use('/api/v1/consents', consentRoutes);         // Phase 2 ✅
 app.use('/api/v1/prescriptions', prescriptionRoutes); // Phase 2 ✅
 app.use('/api/v1/qr', qrRoutes);                   // Phase 2 ✅
+app.use('/api/v1/ai', aiRoutes);                   // Phase 3 ✅
+app.use('/api/v1/emergency', emergencyRoutes);      // Phase 3 ✅
 // app.use('/api/v1/patients', patientRoutes);      ← Phase 2+
 // app.use('/api/v1/doctors', doctorRoutes);        ← Phase 2+
 // app.use('/api/v1/emergency', emergencyRoutes);   ← Phase 3

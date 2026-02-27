@@ -16,6 +16,9 @@ import PatientLookupPage from './pages/doctor/PatientLookupPage';
 import PrescriptionPage from './pages/doctor/PrescriptionPage';
 // Phase 2 — Staff
 import UploadRecordPage from './pages/staff/UploadRecordPage';
+// Phase 3 — AI & Emergency
+import EmergencyPage from './pages/patient/EmergencyPage';
+import SosPage from './pages/patient/SosPage';
 
 // ── Placeholder for pages not yet built ──────────────────────────────────────
 
@@ -179,7 +182,17 @@ export default function App() {
         />
 
         {/* Emergency QR (public, no login required) */}
-        <Route path="/emergency/:code" element={<ComingSoon label="Emergency QR scan" />} />
+        <Route path="/emergency/:uhid" element={<EmergencyPage />} />
+
+        {/* Patient SOS — Phase 3 */}
+        <Route
+          path="/patient/sos"
+          element={
+            <ProtectedRoute allowedRoles={['PATIENT']}>
+              <SosPage />
+            </ProtectedRoute>
+          }
+        />
 
         {/* 404 */}
         <Route path="*" element={<ComingSoon label="404 — Page not found" />} />
